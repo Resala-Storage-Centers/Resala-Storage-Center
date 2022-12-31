@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:storage_management_system/constants/project_colors.dart';
 import 'package:storage_management_system/constants/project_measures.dart';
+import 'package:storage_management_system/ui/DonationWidget.dart';
 import 'package:storage_management_system/ui/frequently_used_widgets/ButtonWidget.dart';
 
 const List<String> donatedItemCategories = <String>['clothes', 'electronics', 'paper', 'furniture', 'other'];
@@ -17,6 +18,17 @@ class DonationScreen extends StatefulWidget {
 class _DonationScreenState extends State<DonationScreen> {
   String donatedItemDropdownValue = donatedItemCategories.first;
   String areaDropdownValue = areas.first;
+ // final int numOfDonatedItems = 1;
+  List <DonationWidget> donationsList =    List.generate(1, (index) => DonationWidget(onChanged: (){}));
+  final ScrollController _scrollController = ScrollController();
+
+  scrollToBottom() async{
+    WidgetsBinding.instance!.addPostFrameCallback(
+          (_) => _scrollController.jumpTo(
+        _scrollController.position.maxScrollExtent,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,30 +75,8 @@ class _DonationScreenState extends State<DonationScreen> {
                           ),
                         ),
                       ),
-                      // const Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 200, vertical: 2),
-                      //   child:  Image(image: AssetImage("assets/images/Resala.jpeg")),
-                      //
-                      // ),
-                      // //   SizedBox(height: 50),
 
-                      //Name
-                     const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 2),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              label: Text('Name'),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: underlineColor),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.cyan),
-                              ),
-                            ),
-                          ),
-                        ),
 
-                      //   SizedBox(height: 50),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -115,9 +105,6 @@ class _DonationScreenState extends State<DonationScreen> {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value,),
-                                // style: TextStyle(
-                                //   color: Colors.cyan,
-                                // ),),
                               );
                             }).toList(),
                           ),
@@ -143,76 +130,28 @@ class _DonationScreenState extends State<DonationScreen> {
 
 
 
-                    //  SizedBox(height: 50),
 
-
-                      //phone number
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 2),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            label: Text('Phone number'),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: underlineColor),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.cyan),
-                            ),
-                          ),
-                        ),
+                      Column(
+                        children:
+                          List.generate(1, (index) => DonationWidget(onChanged: (){})),
                       ),
 
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(width: medium_padding*2),
-
-                        const Text ('Donation category:   '),
-
-                    DropdownButton<String>(
-                      value: donatedItemDropdownValue,
-                      icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.black54),
-                      underline: Container(
-                        height: 1,
-                        color: underlineColor,
-                      ),
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          donatedItemDropdownValue = value!;
-                        });
-                      },
-                      items: donatedItemCategories.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value,),
-                          // style: TextStyle(
-                          //   color: Colors.cyan,
-                          // ),),
-                        );
-                      }).toList(),
-                    ),
-                      ],
-                    ),
+                      ButtonWidget(text: 'Submit', onClicked: () {},),
 
 
-                      ButtonWidget(text: 'Submit', onClicked: (){})
-
-                  ],
 
 
-                  ),
-                  ),
 
+        ],
+    ),
 
         ),
-
-        ),
+      ),
+    ),
       ),
     );
 
   }
 }
+
